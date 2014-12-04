@@ -6,7 +6,7 @@ def DEBUG(message):
     if DB_DEBUG:
         print message
 
-class DbProvider():
+class DatabaseProvider():
     DB_FILE = 'weatherReadings.db'
     SELECT_ALL_STMT = 'SELECT * from READINGS'
     INSERT_STMT = 'INSERT into READINGS values (?, ?, ?, ?, ?,?)'
@@ -29,8 +29,8 @@ class DbProvider():
     def IsInitialized():
         return self.__initialized
 
-    def SaveReading(self, time, humidity, adTemp, tiTemp, thermTemp):
-        data = (self.GetNextId(), time, humidity, adTemp, tiTemp, thermTemp)
+    def SaveReading(self, humidity, adTemp, tiTemp, thermTemp):
+        data = (self.GetNextId(), "someTime", humidity, adTemp, tiTemp, thermTemp)
         self.cursor.execute(DbProvider.INSERT_STMT, data)
         self.conn.commit()
 
@@ -44,5 +44,5 @@ class DbProvider():
         return self.__nextId
 
 if __name__ == "__main__":
-    dbProvider = DbProvider()
-    dbProvider.SaveReading("2014-12-3 10:10:10",23.3, 33.3, 44.4, 55.5)
+    dbProvider = DatabaseProvider()
+    dbProvider.SaveReading(23.3, 33.3, 44.4, 55.5)
